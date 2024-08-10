@@ -22,7 +22,7 @@ const ProductProvider = ({ children }) => {
     const [productList, setProductList] = useState(localStorage.getItem('productList') ? JSON.parse(localStorage.getItem('productList')) : []);
     const [shelf, setShelf] = useState(JSON.parse(localStorage.getItem('shelf'))? JSON.parse(localStorage.getItem('shelf')) : 3);
     const [productsOnShelf, setProductsOnShelf] = useState(localStorage.getItem('productsOnShelf')? JSON.parse(localStorage.getItem('productsOnShelf')) : {});
-    const [disabledRows, setDisabledRows] = useState(new Set());
+    const [disabledRows, setDisabledRows] = useState(localStorage.getItem('disabledRows') ? JSON.parse(localStorage.getItem('disabledRows')) : {});
 
 
     const handleChange = (event) => {
@@ -44,7 +44,6 @@ const ProductProvider = ({ children }) => {
 
 
     const handleSubmit = () => {
-        console.log(product)
         setProductList((prev) => {
             const updatedProductList = [...prev, product];
             localStorage.setItem('productList', JSON.stringify(updatedProductList));

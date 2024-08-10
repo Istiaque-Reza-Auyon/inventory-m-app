@@ -25,6 +25,8 @@ export default function ProductTable() {
     const { productList, disabledRows } = useContext(ProductContext);
     const [rows, setRows] = useState(productList.length > 0 ? productList.map((product, index) => createData(index, product.name, product.price, product.quantity, product.total)) : []);
 
+    // console.log(typeof , 'here')
+    useEffect(()=> console.log(disabledRows),[])
 
     useEffect(() => {
         const newRows = productList.map((product, index) => createData(index, product.name, product.price, product.quantity, product.total));
@@ -55,7 +57,7 @@ export default function ProductTable() {
                                 sx={{
                                     '&:last-child td, &:last-child th': { border: 0 },
                                     '&:last-child td, &:last-child th': { border: 0 },
-                                    ...(disabledRows?.has(index) && { opacity: 0.5, pointerEvents: 'none' })
+                                    ...(disabledRows[index] && { opacity: 0.5, pointerEvents: 'none' })
                                 }}
                                 draggable
                                 onDragStart={(e) => handleDragStart(e, index)}

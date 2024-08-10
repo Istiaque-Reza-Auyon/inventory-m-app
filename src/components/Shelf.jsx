@@ -38,13 +38,20 @@ export default function Shelf() {
             localStorage.setItem('productsOnShelf', JSON.stringify(updatedList));
             return updatedList;
         })
-        setDisabledRows(prev => new Set(prev).add(parseInt(draggedRowIndex)));
+        setDisabledRows(prev => {
+           const updatedSet = {...prev, [draggedRowIndex]: true};
+           localStorage.setItem('disabledRows', JSON.stringify(updatedSet));
+           return updatedSet;
+        });
     };
 
     return (
         <Box sx={{ width: '49vw', backgroundColor: "#e3e2de", p: 1, marginTop: 1, borderRadius: 1 }}>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <h2>Product Shelf</h2>
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <h2 style={{marginBottom: 1}}>Product Shelf</h2>
+                <Typography sx={{ color: "black", marginBottom: 2 }}>
+                    Drag products from the product list and drop on this shelf.
+                </Typography>
             </Box>
             <Stack spacing={2}>
                 {Array.from({ length: shelf }).map((_, index) => (
@@ -53,10 +60,10 @@ export default function Shelf() {
                         onDragOver={handleDragOver}>
                         Shelf {index}
                         <br />
-                        <Typography sx={{fontWeight: "bold", color: "black"}}>
-                         {productsOnShelf[index] === undefined ? 'No product on this shelf' : `Product Serial : ${productsOnShelf[index]}`}
+                        <Typography sx={{ fontWeight: "bold", color: "black" }}>
+                            {productsOnShelf[index] === undefined ? 'No product on this shelf' : `Product Serial : ${productsOnShelf[index]}`}
                         </Typography>
-                        </Item>
+                    </Item>
                 ))}
             </Stack>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
