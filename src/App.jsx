@@ -2,15 +2,26 @@ import { useState } from 'react'
 import './App.css'
 import DenseAppBar from './components/AppBar'
 import AddProductsForm from './components/AddProductsForm'
+import ProductTable from './components/ProductTable'
+import Box from '@mui/material/Box'
+import Shelf from './components/Shelf'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <DenseAppBar/>
-      <h1> Add Products</h1>
-      <AddProductsForm/>
+
+      <DenseAppBar />
+      <Box sx={{ display: "flex" }}>
+        <Box sx={{ marginRight: "1vw" }}>
+          <h2>Add Products</h2>
+          <AddProductsForm />
+          <h2>Products</h2>
+          <ProductTable />
+        </Box>
+        <Box>
+          <Shelf />
+        </Box>
+      </Box>
     </>
   )
 }
