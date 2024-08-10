@@ -13,7 +13,18 @@ export default function AddProductsForm() {
         <Box
             component="form"
             sx={{
-                '& .MuiTextField-root': { marginRight: 1, width: '10vw' },
+                '& .MuiTextField-root': {
+                    marginRight: 1,
+                    width: '10vw',
+                    '@media (max-width: 600px)': {
+                        width: '10vw',  // Adjust the width for very small screens
+                    },
+                },
+                '& .MuiInputBase-input': {
+                    '@media (max-width: 600px)': {
+                        fontSize: '0.8rem',  // Smaller font size for small screens
+                    },
+                },
             }}
             noValidate
             autoComplete="off"

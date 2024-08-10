@@ -26,7 +26,7 @@ export default function ProductTable() {
     const [rows, setRows] = useState(productList.length > 0 ? productList.map((product, index) => createData(index, product.name, product.price, product.quantity, product.total)) : []);
 
     // console.log(typeof , 'here')
-    useEffect(()=> console.log(disabledRows),[])
+    useEffect(() => console.log(disabledRows), [])
 
     useEffect(() => {
         const newRows = productList.map((product, index) => createData(index, product.name, product.price, product.quantity, product.total));
@@ -39,7 +39,18 @@ export default function ProductTable() {
 
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ maxWidth: '50vw' }} aria-label="simple table">
+            <Table sx={{
+                maxWidth: '50vw',
+                overflowX: 'auto',
+                '@media (max-width: 600px)': {
+                    '& table': {
+                        fontSize: '0.15rem',
+                    },
+                    '& th, & td': {
+                        padding: '1px',
+                    },
+                },
+            }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Product Serial</TableCell>
@@ -55,7 +66,6 @@ export default function ProductTable() {
                             <TableRow
                                 key={index}
                                 sx={{
-                                    '&:last-child td, &:last-child th': { border: 0 },
                                     '&:last-child td, &:last-child th': { border: 0 },
                                     ...(disabledRows[index] && { opacity: 0.5, pointerEvents: 'none' })
                                 }}

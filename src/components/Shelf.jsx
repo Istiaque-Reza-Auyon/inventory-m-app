@@ -17,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Shelf() {
-    const { shelf, setShelf, productsOnShelf, setProductsOnShelf, setDisabledRows } = useContext(ProductContext);
+    const { shelf, setShelf, productsOnShelf, setProductsOnShelf, disabledRows, setDisabledRows } = useContext(ProductContext);
 
     const addShelf = () => {
         setShelf((prev) => {
@@ -39,16 +39,21 @@ export default function Shelf() {
             return updatedList;
         })
         setDisabledRows(prev => {
-           const updatedSet = {...prev, [draggedRowIndex]: true};
-           localStorage.setItem('disabledRows', JSON.stringify(updatedSet));
-           return updatedSet;
+            const updatedSet = { ...prev, [draggedRowIndex]: true };
+            localStorage.setItem('disabledRows', JSON.stringify(updatedSet));
+            return updatedSet;
         });
     };
 
     return (
-        <Box sx={{ width: '49vw', backgroundColor: "#e3e2de", p: 1, marginTop: 1, borderRadius: 1 }}>
+        <Box sx={{
+            width: '49vw', backgroundColor: "#e3e2de", p: 1, marginTop: 1, borderRadius: 1, '@media (max-width: 600px)': {
+                width: '25vw',  // Full width for small devices
+                p: 1,  // Less padding on smaller screens
+            },
+        }}>
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <h2 style={{marginBottom: 1}}>Product Shelf</h2>
+                <h2 style={{ marginBottom: 1 }}>Product Shelf</h2>
                 <Typography sx={{ color: "black", marginBottom: 2 }}>
                     Drag products from the product list and drop on this shelf.
                 </Typography>
@@ -57,7 +62,8 @@ export default function Shelf() {
                 {Array.from({ length: shelf }).map((_, index) => (
                     <Item key={index}
                         onDrop={(event) => handleDrop(event, index)}
-                        onDragOver={handleDragOver}>
+                        onDragOver={handleDragOver}
+                        sx={{...(disabledRows[index] && { pointerEvents: 'none' })}}>
                         Shelf {index}
                         <br />
                         <Typography sx={{ fontWeight: "bold", color: "black" }}>
